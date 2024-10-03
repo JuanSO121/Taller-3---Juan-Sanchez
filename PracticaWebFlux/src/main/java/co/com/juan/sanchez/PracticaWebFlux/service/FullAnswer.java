@@ -40,6 +40,13 @@ public class FullAnswer {
                             String answerStepTwo = tuple3.getT2();
                             String answerStepThree = tuple3.getT3();
 
+                            // Verificar que las respuestas no contengan errores
+                            if ("Error al procesar la respuesta".equals(answerStepOne) ||
+                                    "Error al procesar la respuesta".equals(answerStepTwo) ||
+                                    "Error al procesar la respuesta".equals(answerStepThree)) {
+                                return Mono.just("Error en uno de los pasos. Respuestas: " + answerStepOne + ", " + answerStepTwo + ", " + answerStepThree);
+                            }
+
                             // Crear la respuesta final
                             String finalAnswer = String.format(
                                     "{\"data\": [{\"header\": {\"id\": \"12345\", \"type\": \"TestGiraffeRefrigerator\"}, \"answer\": \"Step1: %s - Step2: %s - Step3: %s\"}]}",
@@ -48,9 +55,10 @@ public class FullAnswer {
 
                             // Enviar la respuesta final al WH y retornar la respuesta final
                             return webHook.WH(finalAnswer)
-                                    .flatMap(webHookResponse ->
-                                            Mono.just("Respuesta final enviada al WH: " + webHookResponse + "\nAnswered: " + finalAnswer)
-                                    );
+                                    .flatMap(webHookResponse -> {
+                                        LOG.info("Respuesta final enviada al WH: {}", webHookResponse); // Log del WH
+                                        return Mono.just("Respuesta final enviada al WH: " + webHookResponse + "\nAnswered: " + finalAnswer);
+                                    });
                         })
                 )
                 .onErrorResume(throwable -> {
@@ -63,12 +71,14 @@ public class FullAnswer {
 
 
 
+
     // Metodo para extraer el campo "answer" de la respuesta
     private String extraerAnswer(String response) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response);
-            return root.at("/0/data/0/answer").asText();  // Ruta hacia el campo "answer"
+            return root.at("/data/0/answer").asText();
+            // Ruta hacia el campo "answer"
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return "Error al procesar la respuesta";

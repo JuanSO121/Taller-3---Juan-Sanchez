@@ -10,7 +10,7 @@ public class Batch {
     private final WebClient webClient;
 
     public Batch(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:9000").build();
     }
 
     @Scheduled(fixedRate = 120000) // 2 minutos en milisegundos
@@ -34,7 +34,7 @@ public class Batch {
         """;
 
         webClient.post()
-                .uri("/orquestador/completeAnswer")  // Ajusta la URL según sea necesario
+                .uri("/orquestador/fullAnswer")  // Ajusta la URL según sea necesario
                 .bodyValue(jsonBody)  // Envía el JSON en el cuerpo de la solicitud
                 .retrieve()
                 .bodyToMono(String.class)

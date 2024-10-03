@@ -34,19 +34,10 @@ import java.util.Map;
 @RestController
 public class GetStepApiController implements GetStepApi {
 
-   private static final Logger log = LoggerFactory.getLogger(GetStepApiController.class);
+    private static final Logger log = LoggerFactory.getLogger(GetStepApiController.class);
 
     private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
-    
-   // @Autowired
-   // private JsonApiBodyResponseSuccess response;
-    
-  // @Autowired
-    //private GetEnigmaStepResponse pasoresponse;
-    
-    //private List listResponse = new ArrayList<JsonApiBodyResponseSuccess>();
 
     @org.springframework.beans.factory.annotation.Autowired
     public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -54,26 +45,29 @@ public class GetStepApiController implements GetStepApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
+    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(
+            @ApiParam(value = "request body get enigma step", required = true)
+            @Valid @RequestBody JsonApiBodyRequest body) {
+
         String accept = request.getHeader("Accept");
-        List listResponse = new ArrayList<JsonApiBodyResponseSuccess>();
-         JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
-         GetEnigmaStepResponse pasoresponse = new GetEnigmaStepResponse();
-         
-        pasoresponse.answer("abrir la nevera");
+
+        // Crear la lista de respuesta localmente para evitar acumular respuestas anteriores
+        List<JsonApiBodyResponseSuccess> listResponse = new ArrayList<>();
+
+        // Crear nueva instancia para cada respuesta
+        JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
+        GetEnigmaStepResponse pasoresponse = new GetEnigmaStepResponse();
+
+        // Definir la lógica para la respuesta, ejemplo de respuesta al enigma
+        pasoresponse.setAnswer("abrir la nevera");
         pasoresponse.setHeader(body.getData().get(0).getHeader());
+
+        // Agregar la respuesta a la estructura adecuada
         response.addDataItem(pasoresponse);
         listResponse.add(response);
-        return new ResponseEntity<>(listResponse, HttpStatus.OK);
-        
-    }
-    
-   /* public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(
-            @Parameter(description = "request body get enigma step" ,required=true )
-            @Valid @RequestBody JsonApiBodyRequest body){
-    	
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<JsonApiBodyResponseSuccess>>(HttpStatus.NOT_IMPLEMENTED);
-    }*/
 
+        // Devolver la lista de respuestas sin repetidos
+        return new ResponseEntity<>(listResponse, HttpStatus.OK);
+    }
 }
+

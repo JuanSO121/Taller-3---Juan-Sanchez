@@ -51,32 +51,13 @@ public class Orq {
     ///////////////////////////
     public Mono<String> runServices(String requestBody) {
         // Solicitud al primer servicio
-        Mono<String> servicio1 = webClient.post()
-                .uri("http://localhost:8081/getStep")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(this::extraerAnswer);
-
+        Mono<String> servicio1 = runService1(requestBody).map(this::extraerAnswer);
 
         // Solicitud al segundo servicio
-        Mono<String> servicio2 = webClient.post()
-                .uri("http://localhost:8082/getStep")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(this::extraerAnswer);
+        Mono<String> servicio2 = runService2(requestBody).map(this::extraerAnswer);
 
         // Solicitud al tercer servicio
-        Mono<String> servicio3 = webClient.post()
-                .uri("http://localhost:8083/getStep")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(this::extraerAnswer);
+        Mono<String> servicio3 = runService3(requestBody).map(this::extraerAnswer);
 
         // Unificar las respuestas de los tres servicios en un solo String
         return Mono.zip(servicio1, servicio2, servicio3)
@@ -91,14 +72,16 @@ public class Orq {
                             step1Answer, step2Answer, step3Answer
                     );
 
+                    System.out.println("Respuesta final: " + finalAnswer);  // Log de respuesta final
                     return finalAnswer;
-                });
-
-
+                })
+                .doOnError(e -> System.err.println("Error: " + e.getMessage()));  // Manejo de errores
     }
+
 
     // Metodo para extraer el campo "answer" de la respuesta
     private String extraerAnswer(String response) {
+        System.out.println("Respuesta completa: " + response);  // Agregar log
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(response);
@@ -108,5 +91,6 @@ public class Orq {
             return "Error al procesar la respuesta";
         }
     }
+
 
 }

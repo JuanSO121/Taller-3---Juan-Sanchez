@@ -59,7 +59,7 @@ public class OrqController {
     }
 
     // Llamar al FullAnswer para unificar todas las respuestas
-    @PostMapping("/completeAnswer")
+    @PostMapping("/fullAnswer")
     public Mono<ResponseEntity<String>> getCompleteAnswer(@RequestBody String requestBody) {
         return fullCompleted.callAllSteps(requestBody)
                 .map(response -> ResponseEntity.ok(response))
