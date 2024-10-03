@@ -21,7 +21,7 @@ public class Orq {
 
     public Mono<String> runService1(String requestBody) {
         return webClient.post()
-                .uri("http://localhost:8080/getStep")  // URL del otro servicio
+                .uri("http://localhost:8081/getStep")  // URL del otro servicio
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)  // Pasar el JSON como String
                 .retrieve()
@@ -31,7 +31,7 @@ public class Orq {
 
     public Mono<String> runService2(String requestBody) {
         return webClient.post()
-                .uri("http://localhost:8081/getStep")  // URL del otro servicio
+                .uri("http://localhost:8082/getStep")  // URL del otro servicio
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)  // Pasar el JSON como String
                 .retrieve()
@@ -41,7 +41,7 @@ public class Orq {
 
     public Mono<String> runService3(String requestBody) {
         return webClient.post()
-                .uri("http://localhost:8082/getStep")  // URL del otro servicio
+                .uri("http://localhost:8083/getStep")  // URL del otro servicio
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)  // Pasar el JSON como String
                 .retrieve()
@@ -52,7 +52,7 @@ public class Orq {
     public Mono<String> runServices(String requestBody) {
         // Solicitud al primer servicio
         Mono<String> servicio1 = webClient.post()
-                .uri("http://localhost:8080/getStep")
+                .uri("http://localhost:8081/getStep")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
                 .retrieve()
@@ -62,7 +62,7 @@ public class Orq {
 
         // Solicitud al segundo servicio
         Mono<String> servicio2 = webClient.post()
-                .uri("http://localhost:8081/getStep")
+                .uri("http://localhost:8082/getStep")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
                 .retrieve()
@@ -71,7 +71,7 @@ public class Orq {
 
         // Solicitud al tercer servicio
         Mono<String> servicio3 = webClient.post()
-                .uri("http://localhost:8082/getStep")
+                .uri("http://localhost:8083/getStep")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)
                 .retrieve()

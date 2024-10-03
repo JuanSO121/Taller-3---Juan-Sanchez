@@ -39,7 +39,7 @@ public class StepOne {
 
     public Mono<String> callStepOne(String requestBody) {
         return webClient.post()
-                .uri("http://localhost:8080/getStep")  // URL del otro servicio
+                .uri("http://localhost:8081/getStep")  // URL del otro servicio
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(requestBody)  // Pasar el JSON como String
                 .retrieve()

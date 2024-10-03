@@ -10,7 +10,7 @@ public class Batch {
     private final WebClient webClient;
 
     public Batch(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:9000").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
     }
 
     @Scheduled(fixedRate = 120000) // 2 minutos en milisegundos

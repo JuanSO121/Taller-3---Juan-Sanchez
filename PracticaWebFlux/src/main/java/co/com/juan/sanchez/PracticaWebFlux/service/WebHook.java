@@ -37,7 +37,7 @@ public class WebHook {
 
     public Mono<String> WH(String request){
         return webClient.post()
-                .uri("http://localhost:8083/validate")
+                .uri("http://localhost:8085/validate")
                 .bodyValue(request)  // Pasar el JSON como String
                 .retrieve()
                 .bodyToMono(String.class)
@@ -55,7 +55,7 @@ public class WebHook {
     public Mono<String> WHStart(){
         return webClient
                 .get()
-                .uri("http://localhost:8083/start")
+                .uri("http://localhost:8085/start")
                 .retrieve()
                 .bodyToMono(String.class)
                 .transformDeferred(RetryOperator.of(retry))

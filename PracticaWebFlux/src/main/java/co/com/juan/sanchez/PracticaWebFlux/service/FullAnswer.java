@@ -63,7 +63,7 @@ public class FullAnswer {
 
 
 
-    // Método para extraer el campo "answer" de la respuesta
+    // Metodo para extraer el campo "answer" de la respuesta
     private String extraerAnswer(String response) {
         try {
             ObjectMapper mapper = new ObjectMapper();
