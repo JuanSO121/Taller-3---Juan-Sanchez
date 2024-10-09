@@ -16,13 +16,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class StepOne {
 
-    //Injectar variables en la clase para poder usar sus metodos dentro de la clase.
     private final WebClient webClient;
     private final Retry retry;
     private final CircuitBreaker circuitBreaker;
     private static final Logger LOG = LoggerFactory.getLogger(StepOne.class);
 
-    //Constructor para la configuración y especificiación de metodos Retry y Breaker
     public StepOne(WebClient.Builder webClient, CircuitBreakerRegistry circuitBreakerRegistry, RetryRegistry retryRegistry) {
         this.webClient = webClient.build();
         this.retry = retryRegistry.retry("stepOne");

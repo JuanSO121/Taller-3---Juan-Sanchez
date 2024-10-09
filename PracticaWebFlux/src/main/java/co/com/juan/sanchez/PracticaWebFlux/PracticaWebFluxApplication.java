@@ -9,5 +9,4 @@ public class PracticaWebFluxApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PracticaWebFluxApplication.class, args);
 	}
-
 }

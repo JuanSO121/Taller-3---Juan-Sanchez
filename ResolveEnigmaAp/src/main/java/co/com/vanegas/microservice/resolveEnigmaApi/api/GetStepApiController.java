@@ -51,15 +51,14 @@ public class GetStepApiController implements GetStepApi {
 
         String accept = request.getHeader("Accept");
 
-        // Crear la lista de respuesta localmente para evitar acumular respuestas anteriores
+        // Crear la lista de respuesta local - evita acumular respuestas previas
         List<JsonApiBodyResponseSuccess> listResponse = new ArrayList<>();
 
         // Crear nueva instancia para cada respuesta
         JsonApiBodyResponseSuccess response = new JsonApiBodyResponseSuccess();
         GetEnigmaStepResponse pasoresponse = new GetEnigmaStepResponse();
 
-        // Definir la lógica para la respuesta, ejemplo de respuesta al enigma
-        pasoresponse.setAnswer("abrir la nevera");
+        pasoresponse.setAnswer("Open the refrigerator");
         pasoresponse.setHeader(body.getData().get(0).getHeader());
 
         // Agregar la respuesta a la estructura adecuada

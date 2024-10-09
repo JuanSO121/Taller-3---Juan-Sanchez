@@ -82,8 +82,6 @@
 			<artifactId>resilience4j-spring-boot3</artifactId>
 			<version>2.0.2</version> <!--agrega anotaciones y stodo lo demas, con esto no es necesario crear ben ni config en aplication.rpoperties que se definen el tiempo de espera y eso -->
 		</dependency>
-
-
 	</dependencies>
 
 	<build>

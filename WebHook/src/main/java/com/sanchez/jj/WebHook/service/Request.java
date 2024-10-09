@@ -23,7 +23,6 @@ public class Request {
             e.printStackTrace();
         }
 
-        // Validar el cuerpo JSON
         String result = validateSteps(jsonBody);
         notifyClient(result);
 
@@ -35,7 +34,6 @@ public class Request {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonBody);
             String receivedSteps = rootNode.at("/data/0/answer").asText();  // Ruta hacia el campo "answer"
-
 
             if (EXPECTED_STEPS.equals(receivedSteps)) {
                 return "recibido el mensaje del orquestador";
@@ -51,5 +49,6 @@ public class Request {
     private void notifyClient(String message) {
         LOG.info("Mensaje WebHook: {}", message);
     }
+
 }
 

@@ -35,7 +35,7 @@ public class WebHook {
                         event.getStateTransition().getToState()));
     }
 
-    public Mono<String> WH(String request){
+    public Mono<String> WH(String request) {
         return webClient.post()
                 .uri("http://localhost:8085/validate")
                 .bodyValue(request)  // Pasar el JSON como String
@@ -49,6 +49,7 @@ public class WebHook {
                 })
                 .doOnNext(body -> System.out.println("Respuesta del servicio: " + body));
     }
+
 
 
     ///

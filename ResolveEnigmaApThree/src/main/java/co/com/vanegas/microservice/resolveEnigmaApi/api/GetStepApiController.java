@@ -59,7 +59,7 @@ public class GetStepApiController implements GetStepApi {
         GetEnigmaStepResponse pasoresponse = new GetEnigmaStepResponse();
 
         // Definir la lógica para la respuesta, ejemplo de respuesta al enigma
-        pasoresponse.setAnswer("Cerrar la nevera");
+        pasoresponse.setAnswer("Close the door");
         pasoresponse.setHeader(body.getData().get(0).getHeader());
 
         // Agregar la respuesta a la estructura adecuada
